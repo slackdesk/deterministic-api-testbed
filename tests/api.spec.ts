@@ -1,11 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-const baseURL = "http://127.0.0.1:3001";
 const token = "demo-token";
 
 test.describe("deterministic api testbed", () => {
   test("health endpoint returns healthy", async ({ request }) => {
-    const res = await request.get(`${baseURL}/health`);
+    const res = await request.get(`/health`);
     expect(res.status()).toBe(200);
 
     const body = await res.json();
@@ -14,7 +13,7 @@ test.describe("deterministic api testbed", () => {
   });
 
   test("login succeeds with demo credentials", async ({ request }) => {
-    const res = await request.post(`${baseURL}/auth/login`, {
+    const res = await request.post(`/auth/login`, {
       data: {
         email: "demo@slackdesk.org",
         password: "Password123!"
@@ -28,12 +27,12 @@ test.describe("deterministic api testbed", () => {
   });
 
   test("users endpoint requires auth", async ({ request }) => {
-    const res = await request.get(`${baseURL}/users`);
+    const res = await request.get(`/users`);
     expect(res.status()).toBe(401);
   });
 
   test("users endpoint returns list with auth", async ({ request }) => {
-    const res = await request.get(`${baseURL}/users`, {
+    const res = await request.get(`/users`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -47,7 +46,7 @@ test.describe("deterministic api testbed", () => {
   });
 
   test("create ticket validates required fields", async ({ request }) => {
-    const res = await request.post(`${baseURL}/tickets`, {
+    const res = await request.post(`/tickets`, {
       headers: {
         Authorization: `Bearer ${token}`
       },
@@ -60,7 +59,7 @@ test.describe("deterministic api testbed", () => {
   });
 
   test("create ticket succeeds", async ({ request }) => {
-    const res = await request.post(`${baseURL}/tickets`, {
+    const res = await request.post(`/tickets`, {
       headers: {
         Authorization: `Bearer ${token}`
       },
@@ -79,7 +78,7 @@ test.describe("deterministic api testbed", () => {
   });
 
   test("search returns matched records", async ({ request }) => {
-    const res = await request.get(`${baseURL}/search?q=homepage`, {
+    const res = await request.get(`/search?q=homepage`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -92,7 +91,7 @@ test.describe("deterministic api testbed", () => {
   });
 
   test("rate limit simulation works", async ({ request }) => {
-    const res = await request.get(`${baseURL}/health?rateLimit=true`);
+    const res = await request.get(`/health?rateLimit=true`);
     expect(res.status()).toBe(429);
   });
 });
