@@ -1,0 +1,119 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Deterministic API Testbed Architecture</title>
+  <desc id="desc">Architecture showing OpenAPI spec feeding prompt driven test generation, Playwright API tests, execution, reports, dashboard, and live API hosting on Porkbun and Railway.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0f172a"></stop>
+      <stop offset="100%" stop-color="#111827"></stop>
+    </linearGradient>
+    <linearGradient id="card" x1="0" x2="1">
+      <stop offset="0%" stop-color="#111827"></stop>
+      <stop offset="100%" stop-color="#1f2937"></stop>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1">
+      <stop offset="0%" stop-color="#38bdf8"></stop>
+      <stop offset="100%" stop-color="#818cf8"></stop>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.28"></feDropShadow>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#60a5fa"></path>
+    </marker>
+    <style>
+      .bg { fill: url(#bg); }
+      .card { fill: url(#card); stroke: #334155; stroke-width: 1.5; rx: 18; filter: url(#shadow); }
+      .pill { fill: #0b1220; stroke: #334155; stroke-width: 1.2; rx: 999; }
+      .title { font: 700 30px Inter, Arial, sans-serif; fill: #e5e7eb; }
+      .subtitle { font: 400 14px Inter, Arial, sans-serif; fill: #94a3b8; }
+      .boxTitle { font: 700 20px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .boxText { font: 400 14px Inter, Arial, sans-serif; fill: #cbd5e1; }
+      .small { font: 400 13px Inter, Arial, sans-serif; fill: #94a3b8; }
+      .accentText { font: 700 13px Inter, Arial, sans-serif; fill: #7dd3fc; }
+      .line { stroke: #60a5fa; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .lineSoft { stroke: #475569; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 8 8; }
+      .badge { fill: url(#accent); rx: 999; }
+      .badgeText { font: 700 12px Inter, Arial, sans-serif; fill: #08111f; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="520" rx="28"></rect>
+
+  <text class="title" x="48" y="54">deterministic-api-testbed architecture</text>
+  <text class="subtitle" x="48" y="82">OpenAPI contract → prompt-driven generation → Playwright API tests → reports → dashboard</text>
+
+  <!-- Top row -->
+  <rect class="card" x="48" y="120" width="220" height="120" rx="18"></rect>
+  <text class="boxTitle" x="72" y="158">OpenAPI Spec</text>
+  <text class="boxText" x="72" y="184">openapi.yaml is the</text>
+  <text class="boxText" x="72" y="204">contract source of truth</text>
+  <rect class="badge" x="72" y="214" width="92" height="24" rx="999"></rect>
+  <text class="badgeText" x="92" y="230">contract</text>
+
+  <rect class="card" x="340" y="120" width="240" height="120" rx="18"></rect>
+  <text class="boxTitle" x="364" y="158">Prompt-Driven</text>
+  <text class="boxTitle" x="364" y="182">Test Generation</text>
+  <text class="boxText" x="364" y="208">LLM prompts generate</text>
+  <text class="boxText" x="364" y="228">Playwright API tests</text>
+
+  <rect class="card" x="652" y="120" width="240" height="120" rx="18"></rect>
+  <text class="boxTitle" x="676" y="158">Playwright API</text>
+  <text class="boxTitle" x="676" y="182">Regression Suite</text>
+  <text class="boxText" x="676" y="208">health, auth, users,</text>
+  <text class="boxText" x="676" y="228">tickets, debug, negative tests</text>
+
+  <rect class="card" x="964" y="120" width="188" height="120" rx="18"></rect>
+  <text class="boxTitle" x="988" y="158">Execution</text>
+  <text class="boxText" x="988" y="184">local runs</text>
+  <text class="boxText" x="988" y="204">CI pipelines</text>
+  <text class="boxText" x="988" y="224">hosted API checks</text>
+
+  <!-- Middle row -->
+  <rect class="card" x="168" y="308" width="250" height="132" rx="18"></rect>
+  <text class="boxTitle" x="192" y="346">Live API Hosting</text>
+  <text class="boxText" x="192" y="372">api.slackdesk.org</text>
+  <text class="boxText" x="192" y="392">Porkbun DNS → Railway</text>
+  <text class="boxText" x="192" y="412">Node / Express API</text>
+
+  <rect class="card" x="474" y="308" width="250" height="132" rx="18"></rect>
+  <text class="boxTitle" x="498" y="346">Reports &amp; Artifacts</text>
+  <text class="boxText" x="498" y="372">Playwright HTML report</text>
+  <text class="boxText" x="498" y="392">JSON outputs</text>
+  <text class="boxText" x="498" y="412">Allure-ready results</text>
+
+  <rect class="card" x="780" y="308" width="250" height="132" rx="18"></rect>
+  <text class="boxTitle" x="804" y="346">Dashboard Layer</text>
+  <text class="boxText" x="804" y="372">GitHub artifacts now</text>
+  <text class="boxText" x="804" y="392">Allure / ReportPortal later</text>
+  <text class="boxText" x="804" y="412">trend and failure analysis</text>
+
+  <!-- Arrows top -->
+  <path class="line" d="M268 180 C300 180, 308 180, 340 180"></path>
+  <path class="line" d="M580 180 C612 180, 620 180, 652 180"></path>
+  <path class="line" d="M892 180 C924 180, 932 180, 964 180"></path>
+
+  <!-- Down arrows -->
+  <path class="lineSoft" d="M772 240 C772 270, 772 280, 599 308"></path>
+  <path class="lineSoft" d="M1058 240 C1058 282, 1000 294, 905 308"></path>
+
+  <!-- From spec/generation to hosting -->
+  <path class="lineSoft" d="M460 240 C460 292, 395 292, 293 308"></path>
+
+  <!-- Bottom flow -->
+  <path class="line" d="M418 374 C446 374, 448 374, 474 374"></path>
+  <path class="line" d="M724 374 C752 374, 754 374, 780 374"></path>
+
+  <!-- Footer labels -->
+  <rect class="pill" x="48" y="462" width="270" height="32" rx="999"></rect>
+  <text class="accentText" x="72" y="482">Deterministic, prompt-driven, portfolio-ready QA lab</text>
+
+  <rect class="pill" x="336" y="462" width="250" height="32" rx="999"></rect>
+  <text class="small" x="360" y="482">UI companion: deterministic-ui-testbed</text>
+
+  <rect class="pill" x="606" y="462" width="250" height="32" rx="999"></rect>
+  <text class="small" x="630" y="482">Docs: /docs  •  Spec: /openapi.yaml</text>
+
+  <rect class="pill" x="874" y="462" width="278" height="32" rx="999"></rect>
+  <text class="small" x="898" y="482">Live endpoint: https://api.slackdesk.org/health</text>
+</svg>

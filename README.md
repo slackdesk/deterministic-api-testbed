@@ -53,26 +53,9 @@ https://api.slackdesk.org/openapi.yaml
 
 # 🏗 Architecture
 
-```
-                ┌──────────────────────┐
-                │  OpenAPI Spec        │
-                │  openapi.yaml        │
-                └──────────┬───────────┘
-                           │
-                           ▼
-                  Prompt‑Driven Testing
-                           │
-                           ▼
-                 Playwright API Tests
-                           │
-                           ▼
-                    Test Execution
-                           │
-                           ▼
-                 Test Results / Reports
-                           │
-                           ▼
-                    QA Dashboard
+This project uses an OpenAPI contract as the source of truth, generates Playwright API tests from prompts, executes them locally or in CI, and publishes structured results for dashboards.
+
+![Deterministic API Testbed Architecture](docs/architecture.svg)
 ```
 
 ---
