@@ -53,11 +53,9 @@ https://api.slackdesk.org/openapi.yaml
 
 # 🏗 Architecture
 
-```
 This project uses an OpenAPI contract as the source of truth, generates Playwright API tests from prompts, executes them locally or in CI, and publishes structured results for dashboards.
 
 ![Deterministic API Testbed Architecture](docs/architecture.svg)
-```
 
 ---
 
