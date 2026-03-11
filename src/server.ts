@@ -1,4 +1,7 @@
 import express from "express";
+import path from "path";
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
 
 export function createApp() {
   const app = express();
@@ -12,10 +15,28 @@ export function createApp() {
     next();
   });
 
+  // Load OpenAPI spec from repo root
+  const openApiPath = path.resolve(process.cwd(), "openapi.yaml");
+  const swaggerDocument = YAML.load(openApiPath);
+
+  // Raw spec
+  app.get("/openapi.yaml", (_req, res) => {
+    res.sendFile(openApiPath);
+  });
+
+  // Swagger UI
+  app.use(
+    "/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument, {
+      explorer: true,
+      customSiteTitle: "deterministic-api-testbed docs"
+    })
+  );
+
   // -----------------------------
   // HEALTH
   // -----------------------------
-
   app.get("/health", (_req, res) => {
     res.status(200).json({
       ok: true,
@@ -28,7 +49,6 @@ export function createApp() {
   // -----------------------------
   // USERS
   // -----------------------------
-
   const users = [
     { id: 1, name: "Alice", role: "admin" },
     { id: 2, name: "Bob", role: "user" },
@@ -41,7 +61,7 @@ export function createApp() {
 
   app.get("/users/:id", (req, res) => {
     const id = Number(req.params.id);
-    const user = users.find(u => u.id === id);
+    const user = users.find((u) => u.id === id);
 
     if (!user) {
       return res.status(404).json({
@@ -56,7 +76,6 @@ export function createApp() {
   // -----------------------------
   // AUTH
   // -----------------------------
-
   app.post("/auth/login", (req, res) => {
     const { username, password } = req.body;
 
@@ -80,7 +99,6 @@ export function createApp() {
   // -----------------------------
   // TICKETS
   // -----------------------------
-
   const tickets = [
     { id: 101, title: "Login bug", status: "open" },
     { id: 102, title: "Broken API", status: "closed" },
@@ -106,9 +124,8 @@ export function createApp() {
   });
 
   // -----------------------------
-  // DEBUG ENDPOINTS (great for testing)
+  // DEBUG
   // -----------------------------
-
   app.get("/debug/echo", (req, res) => {
     res.json({
       query: req.query,
@@ -118,9 +135,7 @@ export function createApp() {
 
   app.get("/debug/delay/:ms", async (req, res) => {
     const ms = Number(req.params.ms) || 1000;
-
-    await new Promise(r => setTimeout(r, ms));
-
+    await new Promise((r) => setTimeout(r, ms));
     res.json({
       ok: true,
       delayed: ms
@@ -134,18 +149,25 @@ export function createApp() {
     });
   });
 
+  // basic root
+  app.get("/", (_req, res) => {
+    res.json({
+      ok: true,
+      name: "deterministic-api-testbed",
+      docs: "/docs",
+      spec: "/openapi.yaml",
+      health: "/health"
+    });
+  });
+
   return app;
 }
 
-// ----------------------------------
-// START SERVER
-// ----------------------------------
-
+// Start server
 if (require.main === module) {
   console.log("server.ts: starting");
 
   const app = createApp();
-
   const port = Number(process.env.PORT || 3001);
 
   const server = app.listen(port, "0.0.0.0", () => {

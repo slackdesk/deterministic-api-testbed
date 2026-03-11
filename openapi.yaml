@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: deterministic-api-testbed
+  version: 0.1.0
+  description: Deterministic API testbed for QA automation demos
+servers:
+  - url: https://api.slackdesk.org
+  - url: http://127.0.0.1:3001
+
+tags:
+  - name: Health
+  - name: Auth
+  - name: Users
+  - name: Tickets
+  - name: Debug
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean, example: true }
+                  service: { type: string, example: deterministic-api-testbed }
+                  status: { type: string, example: healthy }
+                  timestamp: { type: string, example: "2026-03-10T23:33:37.749Z" }
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login with demo credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username: { type: string, example: tester }
+                password: { type: string, example: password123 }
+      responses:
+        "200":
+          description: Login success
+        "401":
+          description: Invalid credentials
+
+  /users:
+    get:
+      tags: [Users]
+      summary: List users
+      responses:
+        "200":
+          description: Users list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+  /users/{id}:
+    get:
+      tags: [Users]
+      summary: Get user by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User found
+        "404":
+          description: User not found
+
+  /tickets:
+    get:
+      tags: [Tickets]
+      summary: List tickets
+      responses:
+        "200":
+          description: Tickets list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ticket"
+    post:
+      tags: [Tickets]
+      summary: Create a ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+                  example: Login bug
+      responses:
+        "201":
+          description: Ticket created
+
+  /debug/echo:
+    get:
+      tags: [Debug]
+      summary: Echo query and headers
+      responses:
+        "200":
+          description: Echo response
+
+  /debug/delay/{ms}:
+    get:
+      tags: [Debug]
+      summary: Simulate delayed response
+      parameters:
+        - in: path
+          name: ms
+          required: true
+          schema:
+            type: integer
+            example: 1000
+      responses:
+        "200":
+          description: Delay result
+
+  /debug/error:
+    get:
+      tags: [Debug]
+      summary: Intentional server error response
+      responses:
+        "500":
+          description: Intentional error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        name: { type: string, example: Alice }
+        role: { type: string, example: admin }
+
+    Ticket:
+      type: object
+      properties:
+        id: { type: integer, example: 101 }
+        title: { type: string, example: Login bug }
+        status: { type: string, example: open }
